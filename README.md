@@ -106,3 +106,23 @@ Full-page screenshots include `mobile-360.png`, `mobile.png` (390px),
 `mobile-430.png`, and `desktop.png` (1440px). Viewport checks cover title fit,
 no horizontal overflow, actual expanded arrow taps, all images loading, and
 responsive image selection at standard and higher pixel densities.
+
+## Final editorial and interaction refinements
+
+The existing mobile 12px titles, 140px minimum guide image height, two-column
+layout, and 44px touch areas already passed at 360px, 390px, and 430px and were
+left unchanged. The same custom card component still supplies one link for its
+image, headline, and circular arrow; no nested controls or article routes were
+added. Hover color and image zoom now apply only to devices with a fine pointer
+and hover capability, and image zoom also requires no reduced-motion preference.
+Keyboard focus remains visible independently of hover.
+
+The small aluminum greenhouse photo was reused. Two new editorial compositions
+replace only the materials card's timber exterior and the kits card's repeated
+hero photo: a polycarbonate close-up and a practical greenhouse interior.
+Originals and provenance are in `assets/editorial-originals/`. New WebP files
+use the existing loader and responsive generation pipeline. The hero photograph,
+its variants, crop, positioning, and all eight section layouts are unchanged.
+
+Review images include `screenshots/mobile.png` (390px), `desktop.png` (1440px),
+and `featured-guides-closeup.png` (the 390px card section captured at 2× density).

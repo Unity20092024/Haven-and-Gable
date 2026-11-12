@@ -383,8 +383,10 @@ section[id] {
   object-fit: cover;
   transition: transform 0.4s;
 }
-.notched-card:hover .card-cover > img {
-  transform: scale(1.035);
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .notched-card:hover .card-cover > img {
+    transform: scale(1.035);
+  }
 }
 .card-shade {
   position: absolute;
@@ -449,10 +451,15 @@ section[id] {
   height: 21px;
   stroke-width: 2;
 }
-.notched-card:hover .card-arrow,
 .notched-card:focus-visible .card-arrow {
   background: #d7e4c6;
   color: #103720;
+}
+@media (hover: hover) and (pointer: fine) {
+  .notched-card:hover .card-arrow {
+    background: #d7e4c6;
+    color: #103720;
+  }
 }
 .notched-card--category {
   aspect-ratio: 1.08;

@@ -25,9 +25,9 @@ export const guides = [
     id: "polycarbonate-greenhouses",
     title: "Polycarbonate Greenhouses Explained",
     badge: "Materials & build",
-    image: "/images/greenhouse-timber.webp",
+    image: "/images/greenhouse-panels.webp",
     imageAlt:
-      "Timber greenhouse with translucent polycarbonate panels and vegetable beds",
+      "Close-up of translucent ribbed polycarbonate greenhouse panels and aluminum framing",
     category: "Greenhouses",
     description:
       "Polycarbonate panels are light and diffuse direct sunlight. Compare panel thickness, the frame, ventilation, and the fixing system together. The quality of the whole structure matters as much as the glazing.",
@@ -36,8 +36,9 @@ export const guides = [
     id: "greenhouse-kits",
     title: "Greenhouse Kits: What to Compare First",
     badge: "Buying guides",
-    image: "/images/hero-greenhouse.webp",
-    imageAlt: "Glass greenhouse surrounded by flowers in a sunlit garden",
+    image: "/images/greenhouse-interior.webp",
+    imageAlt:
+      "Greenhouse interior with a potting bench, seed trays, shelves, and gardening supplies",
     category: "Greenhouses",
     description:
       "Look beyond the footprint. Check what the kit includes, which base it needs, and whether doors and vents suit your garden. Measure access for delivery and allow time to prepare a firm, level foundation.",
