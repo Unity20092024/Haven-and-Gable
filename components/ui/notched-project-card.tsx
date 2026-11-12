@@ -11,6 +11,7 @@ export interface NotchedProjectCardProps {
   image: string;
   imageAlt: string;
   badge?: string;
+  sizes?: string;
   variant?: "guide" | "category" | "editor";
   className?: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -27,10 +28,18 @@ export function NotchedProjectCard({
   image,
   imageAlt,
   badge,
+  sizes: imageSizes,
   variant = "guide",
   className,
   onClick,
 }: NotchedProjectCardProps) {
+  const sizes =
+    imageSizes ??
+    (variant === "category"
+      ? "(max-width: 699px) calc((100vw - 72px) / 4), (max-width: 1239px) calc((100vw - 110px) / 4), 282.5px"
+      : variant === "editor"
+        ? "(max-width: 699px) 336px, (max-width: 1239px) calc((100vw - 104px) / 3), 378.7px"
+        : "(max-width: 699px) calc((100vw - 63px) / 2), (max-width: 1239px) calc((100vw - 78px) / 2), 581px");
   const id = `notch-${React.useId().replace(/:/g, "")}`;
   const ref = React.useRef<HTMLAnchorElement>(null);
   const [geometry, setGeometry] = React.useState({
@@ -85,22 +94,14 @@ export function NotchedProjectCard({
         </defs>
       </svg>
       <div className="card-cover" style={{ clipPath: `url(#${id})` }}>
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          sizes={
-            variant === "category"
-              ? "(max-width: 699px) 23vw, 280px"
-              : "(max-width: 699px) 45vw, 580px"
-          }
-        />
+        <Image src={image} alt={imageAlt} fill sizes={sizes} />
         <div className="card-shade" />
         <div className="card-copy">
           {badge && <span className="card-badge">{badge}</span>}
           <h3>{title}</h3>
         </div>
       </div>
+      {/* The arrow shares the full card link; its 44px hit box stays inside it. */}
       <span className="card-arrow" aria-hidden="true">
         <ArrowUpRight />
       </span>

@@ -363,6 +363,9 @@ section[id] {
   position: relative;
   aspect-ratio: 1.86;
   isolation: isolate;
+  width: 100%;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: var(--corner);
   outline-offset: 5px;
 }
@@ -430,6 +433,16 @@ section[id] {
   transition:
     background 0.2s,
     color 0.2s;
+}
+/* Expand the arrow's hit area inward, without changing the visible disc,
+   SVG silhouette, radial gap, or adjacent cards' targets. */
+.card-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: max(44px, 100%);
+  height: max(44px, 100%);
 }
 .card-arrow svg {
   width: 21px;
@@ -949,6 +962,25 @@ section[id] {
     letter-spacing: -0.015em;
     text-wrap: initial;
   }
+  .notched-card--guide {
+    min-height: 140px;
+    aspect-ratio: 1.4;
+  }
+  .notched-card--guide .card-copy {
+    right: 35px;
+    bottom: 9px;
+  }
+  .notched-card--guide .card-badge {
+    font-size: 7px;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .notched-card--guide h3 {
+    font-size: 12px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
   .card-arrow svg {
     width: 13px;
     height: 13px;
@@ -1139,5 +1171,54 @@ section[id] {
   *::after {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Larger invisible hit areas preserve the approved arrow and pill silhouettes.
+   These extend upward into noninteractive copy, never into adjacent controls. */
+.hero .button-green,
+.view-all,
+.text-link {
+  position: relative;
+}
+.hero .button-green::after,
+.view-all::after,
+.text-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: max(44px, 100%);
+  height: max(44px, 100%);
+}
+/* Reserve a real 44px box beside the email input, retaining its smaller disc. */
+.email-field button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: transparent;
+  isolation: isolate;
+}
+.email-field button::before {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  z-index: -1;
+}
+@media (max-width: 699px) {
+  .email-field button::before {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 374px) {
+  .notched-card--category:first-child h3 {
+    font-size: 7px;
+    letter-spacing: -0.02em;
   }
 }

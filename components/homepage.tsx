@@ -204,11 +204,16 @@ export default function Homepage() {
               </div>
             )}
             <div className="editors-grid">
-              {picks.map((item) => (
+              {picks.map((item, index) => (
                 <div key={item.id} className="editor-item">
                   <NotchedProjectCard
                     {...item}
                     variant="editor"
+                    sizes={
+                      index === 0
+                        ? "(max-width: 699px) calc(100vw - 54px), (max-width: 1239px) calc((100vw - 104px) / 3), 378.7px"
+                        : "(max-width: 699px) calc((100vw - 64px) / 2), (max-width: 1239px) calc((100vw - 104px) / 3), 378.7px"
+                    }
                     href={`#${item.id}`}
                     onClick={(event) => {
                       event.preventDefault();
@@ -378,6 +383,7 @@ export default function Homepage() {
               width={900}
               height={600}
               className="preview-image"
+              sizes="(max-width: 559px) calc(100vw - 74px), 506px"
             />
             <span className="eyebrow">{article.badge}</span>
             <h2 id="article-preview-title">{article.title}</h2>
