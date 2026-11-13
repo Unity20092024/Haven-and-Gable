@@ -86,6 +86,47 @@ homepage is pixel-identical to its approved baseline at all five widths.
 Review screenshots are in `screenshots/frontend-b/`. The article and product-card
 screenshots show the real rendered route, not a component gallery.
 
+## Follow-up: red issue indicator and final visual review
+
+The retained Next.js development log identifies the reported issue as a React
+hydration attribute mismatch, recorded at development uptime `00:40:43.972`
+and again at `00:40:49.085`. In both the header and footer, the server-rendered
+brand link had `href="#top"`, while the client expected `href="/"`. This was a
+development diagnostic from the shared-brand refactor, not an intentional part
+of the website.
+
+The current source already passes the same explicit destination through
+`SiteHeader`/`SiteFooter` to `Brand` on server and client. Restarting the stale
+development server cleared the diagnostic. Fresh article → home → article loads
+at 390px and 1440px confirmed the two article logo links both point to `/` and
+the homepage links both point to `#top`, with no console warnings, hydration
+errors, or issue badge. No hydration suppression or additional indicator-hiding
+configuration was added. Next.js documents that the existing `devIndicators:
+false` does not suppress compile/runtime errors.
+
+No application/design change was necessary. The approved article header,
+typography, photographs, logo, notch component, and styles remain unchanged.
+The follow-up production build is used for all review captures, so development
+tooling is absent. Screenshots include complete 390px/1440px pages and separate
+close-ups at both widths:
+
+- `article-mobile.png` / `article-desktop.png`
+- `comparison-section-mobile.png` / `comparison-section-desktop.png`
+- `comparison-mobile.png` / `comparison-desktop.png` (notched product cards)
+- `related-guides-mobile.png` / `related-guides-desktop.png`
+
+TypeScript, ESLint, production build, and all eight article boundary checks were
+rerun successfully. The five-width production browser matrix is repeated for
+contents anchors, contained table scrolling, navigation, previews, accessibility,
+image loading, and homepage preservation. The production console is also checked
+for hydration warnings (which do not necessarily emit a `pageerror` event).
+All repeated checks passed: seven contents targets, nine loaded images, zero
+axe violations, zero observed layout shift, and no document overflow at each
+width. Real logo, breadcrumb, home-section, and browser-back navigation also
+passed at 390px and 1440px. The freshly captured complete-page and card images
+are byte-identical to the previous production captures, confirming that this
+follow-up has not changed the approved appearance.
+
 ## Remaining limitations
 
 This is sample editorial content, not a published or tested buying guide. Real
