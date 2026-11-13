@@ -2,8 +2,13 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Leaf, Menu, Search, X, Mail } from "lucide-react";
-import { Announcement, Brand } from "@/components/brand";
+import { ArrowRight, Leaf, X, Mail } from "lucide-react";
+import { SiteHeader, SiteFooter } from "@/components/site-chrome";
+import {
+  SiteSearchDialog,
+  GuidePreviewDialog,
+  SiteInfoDialog,
+} from "@/components/site-dialogs";
 import { NotchedProjectCard } from "@/components/ui/notched-project-card";
 import { allArticles, categories, editors, guides } from "@/lib/content";
 
@@ -32,69 +37,15 @@ export default function Homepage() {
   const picks = category
     ? allArticles.filter((item) => item.category === category)
     : editors;
-  const searchResults = allArticles.filter((item) =>
-    `${item.title} ${item.badge}`.toLowerCase().includes(query.toLowerCase()),
-  );
 
   return (
     <>
-      <a href="#main" className="skip-link">
-        Skip to content
-      </a>
-      <div id="top">
-        <Announcement />
-      </div>
-      <header className="site-header">
-        <div className="header-inner">
-          <Brand />
-          <nav className="desktop-nav" aria-label="Main navigation">
-            <a href="#featured-guides">Greenhouses</a>
-            <a href="#categories">Garden &amp; Growing</a>
-            <a href="#editors-picks">Outdoor Living</a>
-          </nav>
-          <div className="header-actions">
-            <button
-              className="icon-button"
-              aria-label="Search guides"
-              onClick={() => searchRef.current?.showModal()}
-            >
-              <Search />
-            </button>
-            <button
-              className="icon-button menu-button"
-              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-        </div>
-        {menuOpen && (
-          <nav
-            className="mobile-nav"
-            id="mobile-navigation"
-            aria-label="Mobile navigation"
-          >
-            {[
-              { href: "#featured-guides", title: "Featured Guides" },
-              { href: "#categories", title: "Browse by Category" },
-              { href: "#editors-picks", title: "Editor's Picks" },
-              { href: "#newsletter", title: "The Haven Letter" },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.title}
-                <ArrowRight aria-hidden="true" />
-              </a>
-            ))}
-          </nav>
-        )}
-      </header>
+      <SiteHeader
+        menuOpen={menuOpen}
+        onToggleMenu={() => setMenuOpen(!menuOpen)}
+        onCloseMenu={() => setMenuOpen(false)}
+        onSearch={() => searchRef.current?.showModal()}
+      />
       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
           <Image
@@ -282,141 +233,15 @@ export default function Homepage() {
           </section>
         </div>
       </main>
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <div className="footer-intro">
-            <Brand />
-            <p>A little more joy in the places you call home.</p>
-          </div>
-          <nav aria-label="Footer guides">
-            <strong>Find your inspiration</strong>
-            <a href="#featured-guides">Greenhouses</a>
-            <a href="#categories">Garden &amp; Growing</a>
-            <a href="#editors-picks">Outdoor Living &amp; Cooking</a>
-          </nav>
-          <nav aria-label="About Haven and Gable">
-            <strong>Haven &amp; Gable</strong>
-            <button onClick={() => openInfo("About us")}>About us</button>
-            <button onClick={() => openInfo("Contact")}>Contact</button>
-            <button onClick={() => openInfo("Privacy")}>Privacy</button>
-          </nav>
-        </div>
-        <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Haven &amp; Gable</span>
-          <span>Better Living, Inside &amp; Out.</span>
-          <a href="#top">Back to top ↑</a>
-        </div>
-      </footer>
-      <dialog
-        ref={searchRef}
-        className="site-dialog"
-        onClick={(event) => {
-          if (event.target === event.currentTarget) searchRef.current?.close();
-        }}
-        aria-labelledby="search-title"
-      >
-        <div className="dialog-heading">
-          <h2 id="search-title">Find your next good idea.</h2>
-          <button
-            className="icon-button"
-            aria-label="Close search"
-            onClick={() => searchRef.current?.close()}
-          >
-            <X />
-          </button>
-        </div>
-        <label htmlFor="guide-search" className="sr-only">
-          Search guides
-        </label>
-        <input
-          id="guide-search"
-          className="search-input"
-          placeholder="Search greenhouses, gardens, outdoor living…"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <div className="search-results">
-          {searchResults.length ? (
-            searchResults.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  searchRef.current?.close();
-                  openArticle(item);
-                }}
-              >
-                <span>
-                  <small>{item.badge}</small>
-                  {item.title}
-                </span>
-                <ArrowRight aria-hidden="true" />
-              </button>
-            ))
-          ) : (
-            <p>No guides found. Try “garden” or “greenhouse”.</p>
-          )}
-        </div>
-      </dialog>
-      <dialog
-        ref={articleRef}
-        className="site-dialog article-dialog"
-        onClick={(event) => {
-          if (event.target === event.currentTarget) articleRef.current?.close();
-        }}
-        aria-labelledby="article-preview-title"
-      >
-        <div className="dialog-heading">
-          <span className="eyebrow">Guide preview</span>
-          <button
-            className="icon-button"
-            aria-label="Close guide preview"
-            onClick={() => articleRef.current?.close()}
-          >
-            <X />
-          </button>
-        </div>
-        {article && (
-          <>
-            <Image
-              src={article.image}
-              alt={article.imageAlt}
-              width={900}
-              height={600}
-              className="preview-image"
-              sizes="(max-width: 559px) calc(100vw - 74px), 506px"
-            />
-            <span className="eyebrow">{article.badge}</span>
-            <h2 id="article-preview-title">{article.title}</h2>
-            <p>{article.description}</p>
-            <span className="preview-note">
-              A first look from Haven &amp; Gable. Full guides are coming soon.
-            </span>
-          </>
-        )}
-      </dialog>
-      <dialog
-        ref={infoRef}
-        className="site-dialog"
-        aria-labelledby="info-title"
-      >
-        <div className="dialog-heading">
-          <h2 id="info-title">{info}</h2>
-          <button
-            className="icon-button"
-            aria-label="Close information"
-            onClick={() => infoRef.current?.close()}
-          >
-            <X />
-          </button>
-        </div>
-        <p>
-          {info === "About us"
-            ? "Haven & Gable brings together practical guidance and thoughtful inspiration for home, garden, and outdoor living. Our first collection of guides is taking shape."
-            : info === "Privacy"
-              ? "This frontend preview has no analytics, advertising, or newsletter subscription service. Search stays in your browser, and the newsletter preview does not send or store your email address."
-              : "We're getting ready to welcome you. Contact details will be available when Haven & Gable launches."}
-        </p>
-      </dialog>
+      <SiteFooter onInfo={openInfo} />
+      <SiteSearchDialog
+        dialogRef={searchRef}
+        query={query}
+        onQuery={setQuery}
+        onSelect={openArticle}
+      />
+      <GuidePreviewDialog dialogRef={articleRef} article={article} />
+      <SiteInfoDialog dialogRef={infoRef} info={info} />
     </>
   );
 }
