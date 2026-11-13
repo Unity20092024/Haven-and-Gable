@@ -82,7 +82,7 @@ The three greenhouse images generated earlier in the conversation are reused:
 Hero, garden, outdoor living, and outdoor cooking images were generated to fill
 missing subjects and converted to local WebP assets. The hero photograph follows
 the reference's composition; the screenshot did not include a separate original
-hero image file. The house-and-leaf brand mark is recreated as SVG.
+hero image file. The initial temporary SVG brand mark has been replaced by the exact official PNG supplied by the owner.
 
 All work is limited to Frontend A. Further pages and integrations await approval.
 
@@ -126,3 +126,16 @@ its variants, crop, positioning, and all eight section layouts are unchanged.
 
 Review images include `screenshots/mobile.png` (390px), `desktop.png` (1440px),
 and `featured-guides-closeup.png` (the 390px card section captured at 2× density).
+
+## Official branding
+
+`public/branding/haven-and-gable-logo.png` is extracted byte-for-byte from the
+owner-supplied logo ZIP. The shared Brand component uses that exact image in
+both header and footer, including the original wordmark and tagline. CSS
+accounts for the PNG's transparent margins without cropping or redrawing it,
+while preserving the existing header and footer row heights.
+
+The ZIP contains no separate emblem. `scripts/generate-branding-icons.py`
+crops the emblem directly from the supplied PNG and produces the browser and
+Apple icons with standard resizing. No replacement mark is drawn or generated.
+The original logo file is never modified by this script.
