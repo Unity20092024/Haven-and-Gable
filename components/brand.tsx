@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Leaf } from "lucide-react";
 
-export function Brand() {
+export function Brand({ href = "#top" }: { href?: string }) {
   return (
-    <a className="brand" href="#top" aria-label="Haven and Gable home">
+    <a className="brand" href={href} aria-label="Haven and Gable home">
       <Image
         src="/branding/haven-and-gable-logo.png"
         alt="Haven & Gable — Better Living, Inside & Out."

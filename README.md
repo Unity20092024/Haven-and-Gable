@@ -40,8 +40,8 @@ is not used with static exports. The app runs in Next.js via `npm run dev`.
 8. Footer
 
 Search filters local preview content. Category tiles filter Editor's Picks.
-Guide cards open short frontend-only previews; there are no article template
-routes. Newsletter submission validates the email locally and displays a preview
+Homepage cards retain their short frontend-only previews. Frontend B adds one
+article route at `/guides/small-greenhouses`; related guides remain previews. Newsletter submission validates the email locally and displays a preview
 message. It does not save, subscribe, or send the address. No CMS, backend,
 affiliate integration, ads, or analytics have been added.
 
@@ -84,7 +84,8 @@ missing subjects and converted to local WebP assets. The hero photograph follows
 the reference's composition; the screenshot did not include a separate original
 hero image file. The initial temporary SVG brand mark has been replaced by the exact official PNG supplied by the owner.
 
-All work is limited to Frontend A. Further pages and integrations await approval.
+Frontend A is approved. Frontend B adds one review-only article route. Further
+pages and integrations await approval.
 
 ## Frontend A refinements
 
@@ -139,3 +140,20 @@ The ZIP contains no separate emblem. `scripts/generate-branding-icons.py`
 crops the emblem directly from the supplied PNG and produces the browser and
 Apple icons with standard resizing. No replacement mark is drawn or generated.
 The original logo file is never modified by this script.
+
+## Frontend B — article reading page
+
+Visit `/guides/small-greenhouses` for the single demonstration article. See
+[the implementation and QA notes](docs/frontend-b-review.md) for scope,
+components, sample-product and affiliate boundaries, and validation.
+
+```bash
+npm run test:article
+npm run typecheck
+npm run lint
+npm run build
+```
+
+The boundary-check command uses Node's native TypeScript support (Node 24+).
+No new application dependencies were added. Production `next build` includes
+only the homepage and this article route, plus framework and icon routes.
